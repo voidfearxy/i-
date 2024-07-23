@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>..</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-image: url('image.png'); /* Buraya kendi resim URL'ini ekle */
+            background-size: cover; /* Arka plan resmini kapla */
+            background-position: bottom; /* Ortala */
+            background-repeat: no-repeat; /* Tekrar etme */
+        }
+        .content {
+            text-align: center;
+            color: #fff;
+            backdrop-filter: blur(10px); /* Arka planı biraz bulanıklaştır */
+            padding: 20px;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.5); /* İçeriği daha okunabilir yapmak için hafif siyah arka plan */
+        }
+        .time {
+            font-size: 1.5em;
+            margin-top: 10px;
+        }
+        #first {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    
+    <audio id="background-music" src="sad.mp3" autoplay loop></audio> <!-- Şarkı URL'sini buraya ekle -->
+    <div class="content">
+        <p id="first">İlaydanın beni affetmesini bekliyorum.</p>
+        <p>Geçen süre:</p>
+        <div class="time" id="time"></div>
+    </div>
+
+    <script>
+        function updateTimeDifference() {
+            const startDate = new Date("2024-07-23T00:00:00");
+            const now = new Date();
+            const difference = now - startDate;
+            
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+            const milliseconds = (difference % 1000).toString().padStart(3, '0');
+
+            document.getElementById("time").textContent = 
+                `${days} gün, ${hours} saat, ${minutes} dakika, ${seconds} saniye, ${milliseconds} milisaniye geçti.`;
+        }
+
+        function enableSound() {
+            const audio = document.getElementById('background-music');
+            audio.muted = false; // Sesi aç
+            audio.play().catch(function(error) {
+                console.log("Şarkı oynatılamadı:", error);
+            });
+        }
+
+        setInterval(updateTimeDifference, 100);
+
+        window.addEventListener('load', enableSound); // Sayfa yüklendiğinde ses açılacak
+    </script>
+</body>
+</html>
